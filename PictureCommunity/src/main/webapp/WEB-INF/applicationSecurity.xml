@@ -44,4 +44,13 @@
 		<security:intercept-url pattern="/primepush/**" access="permitAll"/>
 		<security:access-denied-handler error-page="/faces/pages/login.xhtml"/>
 	</security:http>
+
+<!-- 
+	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url pattern="/rest/token/**" access="permitAll"/>
+		<security:intercept-url pattern="/rest/register/**" access="permitAll"/>
+		<security:intercept-url pattern="/rest/picture/**" access="permitAll"/>
+		<security:intercept-url pattern="/rest/**" access="hasRole('user') or hasRole('admin')"/>
+	</security:http>
+-->
 </beans>

@@ -30,7 +30,8 @@ public class User implements UserDetails, Serializable {
 	// Mailadresse des Anwenders, muss eindeutig sein
 	private String email;
 
-	// Andere Anwender, die mich als Freund deklariert haben
+	// Andere Anwender, die mich als Freund deklariert haben (von 
+	// diesen Anwendern darf ich die privaten Bilder sehen).
 	private Set<User> friendsOf = new HashSet<User>();
 
 	/**
