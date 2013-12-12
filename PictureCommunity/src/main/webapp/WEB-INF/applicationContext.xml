@@ -12,7 +12,8 @@
 						http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 	<context:annotation-config />
 	<context:component-scan base-package="de.hska.iwii" />
-	<context:property-placeholder location="classpath:/pictureCommunityHSQL.properties" />
+	<!-- <context:property-placeholder location="classpath:/pictureCommunityHSQL.properties" /> -->
+	<context:property-placeholder location="classpath:/pictureCommunityMySQL.properties" />
 	<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
 
 	<!-- Alle Einstellungen fuer Spring-Security sind in eine separate Datei ausgelagert. -->
