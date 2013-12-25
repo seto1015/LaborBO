@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:include src="/pages/include/head.xhtml"></ui:include>
+	<h:outputStylesheet library="css" name="default.css"/>
+	<h:body >
+
+	<h:form>  
+                              
+	    <h:panelGrid columns="2" cellpadding="5">  
+	        <h:outputLabel for="name" value="Name:"/>  
+	        <p:inputText id="name" value="#{loginController.name}" />  
+	          
+	        <h:outputLabel for="email" value="Email:"/>  
+	        <p:inputText id="email" value="#{loginController.email}" />  
+	        
+	        <h:outputLabel for="password" value="Passwort:"/>  
+	        <p:password id="password" value="#{loginController.password}" />  
+	          
+	      	<p:commandButton value="Registrieren" action="#{loginController.newUser()}"/>
+	       
+	    </h:panelGrid>  
+      
+	</h:form>  
+
+
+	</h:body>
+</html>
