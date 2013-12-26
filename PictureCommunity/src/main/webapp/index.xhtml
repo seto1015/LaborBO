@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:include src="/pages/include/head.xhtml"></ui:include>
+
+	<h:body>
+<style type="text/css">
+.mypanelgrid td {
+border-style: none !important;
+padding: 2px 2px;
+}
+</style>
+
+
+<p:panelGrid style="width:100%" styleClass="mypanelgrid">  
+    <f:facet name="header">  
+        <p:row>  
+            <p:column colspan="1" style="text-align: left"><p:graphicImage value="/resources/images/logo.png" /></p:column>
+            <p:column style="text-align: left"><h1>Picture Community</h1></p:column>
+            <p:column colspan="2" style="text-align: right; vertical-align: top; padding:8px">Menü</p:column>  
+            <p:column colspan="1" style="text-align: right; vertical-align: top; padding:8px 15px">Logout</p:column>      
+        </p:row>  
+    </f:facet>  
+    
+    
+   </p:panelGrid>
+
+	</h:body>
+</html>

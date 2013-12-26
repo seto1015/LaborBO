@@ -11,21 +11,39 @@
 	<h:body >
 
 	<h:form>  
-                              
-	    <h:panelGrid columns="2" cellpadding="5">  
-	        <h:outputLabel for="name" value="Name:"/>  
-	        <p:inputText id="name" value="#{loginController.name}" />  
+                
+       <p:panel id="panel" header="Registrieren">  
+        
+                         
+	     <p:messages id="msgs"/>  
+	    <h:panelGrid columns="3" cellpadding="5">  
+	        <h:outputLabel for="name" value="Name: *"/>  
+	        <p:inputText id="name" value="#{loginController.name}" required="true" label="Name">
+	          <f:validateLength minimum="2" />
+	          <p:ajax update="msgName" event="keyup" />  
+	        </p:inputText> 
+	        <p:message for="name" id="msgName" display="icon"/>   
 	          
-	        <h:outputLabel for="email" value="Email:"/>  
-	        <p:inputText id="email" value="#{loginController.email}" />  
+	        <h:outputLabel for="email" value="Email: *"/>  
+	        <p:inputText id="email" value="#{loginController.email}" required="true" label="Email">  
+	        	<f:validateLength minimum="4" />
+	        	<p:ajax update="msgEmail" event="keyup" /> 
+	        </p:inputText>
+	        <p:message for="email" id="msgEmail" display="icon"/> 
 	        
-	        <h:outputLabel for="password" value="Passwort:"/>  
-	        <p:password id="password" value="#{loginController.password}" />  
+	        <h:outputLabel for="password" value="Passwort: *"/>  
+	        <p:password id="password" value="#{loginController.password}" required="true" label="Passwort" feedback="true"   
+                        promptLabel="Bitte ein Passwort eingeben" weakLabel="schwach"  
+                        goodLabel="gut" strongLabel="stark">  
+	              <f:validateLength minimum="3" /> 
+	              <p:ajax update="msgPassword" event="keyup" />   
+	        </p:password> 
+	        <p:message for="password" id="msgPassword" display="icon"/> 
 	          
-	      	<p:commandButton value="Registrieren" action="#{loginController.newUser()}"/>
+	      	<p:commandButton value="Registrieren" update="panel" action="#{loginController.newUser()}"/>
 	       
 	    </h:panelGrid>  
-      
+      </p:panel>
 	</h:form>  
 
 
