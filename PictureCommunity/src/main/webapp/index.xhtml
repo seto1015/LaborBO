@@ -23,10 +23,14 @@ padding: 2px 2px;
             <p:column colspan="1" style="text-align: left"><p:graphicImage value="/resources/images/logo.png" /></p:column>
             <p:column style="text-align: left"><h1>Picture Community</h1></p:column>
             <p:column colspan="2" style="text-align: right; vertical-align: top; padding:8px">Menü</p:column>  
-            <p:column colspan="1" style="text-align: right; vertical-align: top; padding:8px 15px">Logout</p:column>      
+            <p:column colspan="1" style="text-align: right; vertical-align: top; padding:8px 15px">
+            	<h:form>
+            	<p:commandLink value="Login" action="/pages/login.xhtml" />
+            	</h:form>
+           	</p:column>      
         </p:row>  
     </f:facet>  
-    
+
     
    </p:panelGrid>
 
