@@ -7,7 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:include src="/pages/include/head.xhtml"></ui:include>
-	<h:outputStylesheet library="css" name="default.css"/>
+	<!-- <h:outputStylesheet library="css" name="default.css"/> -->
 	<h:body onload="document.forms[0].elements['login:name'].focus()">
 		<script type="text/javascript">
 			function SetFocus () {
@@ -15,6 +15,9 @@
 			}
 		</script>
 		<h:outputStylesheet name="index.css"/>
+
+			
+		<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
 
 		<form id="login" method="post" action="/PictureCommunity/j_spring_security_check">
 			<table>

@@ -74,7 +74,15 @@ public class LoginController implements Serializable{
 				
 	}
 
+	public boolean getLoggedIn() {
+		SecurityContext sc = SecurityContextHolder.getContext();
 
+		if (sc.getAuthentication().isAuthenticated()) {
+			return true;
+		}
+		return false;
+	}
+	
 	public String getName() {
 		return name;
 	}

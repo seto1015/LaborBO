@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	
+	<style type="text/css">
+		.mypanelgrid td {
+			border-style: none !important;
+			padding: 2px 2px;
+		}
+	</style>
+	
+	<body>
+		<p:panelGrid style="width:100%" styleClass="mypanelgrid">  
+		    <f:facet name="header">  
+		        <p:row>  
+		            <p:column colspan="1" style="text-align: left"><p:graphicImage value="/resources/images/logo.png" /></p:column>
+		            <p:column style="text-align: left"><h1>Picture Community</h1></p:column>
+		            <p:column colspan="2" style="text-align: right; vertical-align: top; padding:8px">Menü</p:column>  
+		            <p:column colspan="1" style="text-align: right; vertical-align: top; padding:8px 15px">
+		            	<h:form>
+		            		<p:commandLink value="#{loginController.loggedIn ? 'Login' : 'Logout'}" action="/pages/login.xhtml" />
+		            	</h:form>           	
+		           	</p:column>      
+		        </p:row>  
+		    </f:facet>  
+		</p:panelGrid>	
+	</body>
+</html>
