@@ -10,17 +10,24 @@
 			border-style: none !important;
 			padding: 2px 2px;
 		}
+		#headH1 {
+    		font-size: 30px !important;
+		}
+		.textNav {
+			font-size: 15px !important;
+		}	
+		
 	</style>
 	
-	<p:panelGrid style="width:100%" styleClass="mypanelgrid">  
+	<p:panelGrid style="width:100%; margin-bottom:10px" styleClass="mypanelgrid">  
 	    <f:facet name="header">  
 	        <p:row>  
 	            <p:column colspan="1" style="text-align: left"><p:graphicImage value="/resources/images/logo.png" /></p:column>
-	            <p:column style="text-align: left"><h1>Picture Community</h1></p:column>
-	            <p:column colspan="2" style="text-align: right; vertical-align: top; padding:8px">Menü</p:column>  
+	            <p:column style="text-align: left"><h1 id="headH1">Picture Community</h1></p:column>
+	            <p:column colspan="2" class="textNav" style="text-align: right; vertical-align: top; padding:8px">Menü</p:column>  
 	            <p:column colspan="1" style="text-align: right; vertical-align: top; padding:8px 15px">
 	            	<h:form>
-	            		<p:commandLink value="#{loginController.loggedIn ? 'Logout' : 'Login'}" action="#{loginController.loginOut}" />
+	            		<p:commandLink class="textNav" value="#{loginController.loggedIn ? 'Logout' : 'Login'}" action="#{loginController.loginOut}" />
 	            	</h:form>           	
 	           	</p:column>      
 	        </p:row>  

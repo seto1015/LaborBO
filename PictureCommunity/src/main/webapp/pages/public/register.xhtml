@@ -7,16 +7,17 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:include src="/pages/include/head.xhtml"></ui:include>
-	<!--  <h:outputStylesheet library="css" name="default.css"/>-->
+	<h:outputStylesheet library="css" name="default.css"/>
+	
 	<h:body >
 	<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
 
 	<h:form>  
                 
-       <p:panel id="panel" header="Registrieren">  
-        
-                         
-	     <p:messages id="msgs"/>  
+       <p:panel id="panel" header="Registrieren" style="width:23%"	>  
+                            
+	    <p:messages id="msgs"/>  
+
 	    <h:panelGrid columns="3" cellpadding="5">  
 	        <h:outputLabel for="name" value="Name: *"/>  
 	        <p:inputText id="name" value="#{loginController.name}" required="true" label="Name">
