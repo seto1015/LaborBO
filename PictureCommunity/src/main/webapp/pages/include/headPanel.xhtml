@@ -12,20 +12,18 @@
 		}
 	</style>
 	
-	<body>
-		<p:panelGrid style="width:100%" styleClass="mypanelgrid">  
-		    <f:facet name="header">  
-		        <p:row>  
-		            <p:column colspan="1" style="text-align: left"><p:graphicImage value="/resources/images/logo.png" /></p:column>
-		            <p:column style="text-align: left"><h1>Picture Community</h1></p:column>
-		            <p:column colspan="2" style="text-align: right; vertical-align: top; padding:8px">Menü</p:column>  
-		            <p:column colspan="1" style="text-align: right; vertical-align: top; padding:8px 15px">
-		            	<h:form>
-		            		<p:commandLink value="#{loginController.loggedIn ? 'Login' : 'Logout'}" action="/pages/login.xhtml" />
-		            	</h:form>           	
-		           	</p:column>      
-		        </p:row>  
-		    </f:facet>  
-		</p:panelGrid>	
-	</body>
+	<p:panelGrid style="width:100%" styleClass="mypanelgrid">  
+	    <f:facet name="header">  
+	        <p:row>  
+	            <p:column colspan="1" style="text-align: left"><p:graphicImage value="/resources/images/logo.png" /></p:column>
+	            <p:column style="text-align: left"><h1>Picture Community</h1></p:column>
+	            <p:column colspan="2" style="text-align: right; vertical-align: top; padding:8px">Menü</p:column>  
+	            <p:column colspan="1" style="text-align: right; vertical-align: top; padding:8px 15px">
+	            	<h:form>
+	            		<p:commandLink value="#{loginController.loggedIn ? 'Logout' : 'Login'}" action="#{loginController.loginOut}" />
+	            	</h:form>           	
+	           	</p:column>      
+	        </p:row>  
+	    </f:facet>  
+	</p:panelGrid>	
 </html>

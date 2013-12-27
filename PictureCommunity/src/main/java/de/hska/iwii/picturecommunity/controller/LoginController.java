@@ -1,10 +1,15 @@
 package de.hska.iwii.picturecommunity.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.Resource;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
@@ -76,13 +81,48 @@ public class LoginController implements Serializable{
 
 	public boolean getLoggedIn() {
 		SecurityContext sc = SecurityContextHolder.getContext();
-
-		if (sc.getAuthentication().isAuthenticated()) {
+		 
+		if (sc.getAuthentication() != null && sc.getAuthentication().getPrincipal() instanceof User && sc.getAuthentication().isAuthenticated()) {
 			return true;
 		}
 		return false;
 	}
 	
+
+	
+	   public String login() throws ServletException, IOException{
+		      ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
+		      HttpServletRequest request = ((HttpServletRequest)context.getRequest());
+		            
+		      ServletResponse resposnse = ((ServletResponse)context.getResponse());
+		      RequestDispatcher dispatcher = request.getRequestDispatcher("/PictureCommunity/j_spring_security_check");
+		      dispatcher.forward(request, resposnse);
+		      FacesContext.getCurrentInstance().responseComplete();
+
+		      if(getLoggedIn()){
+		    	  return "pages/public/demo.xhtml";
+		      }
+		      
+		      return null;
+		   }
+	
+	
+	   public String loginOut(){
+		   if(getLoggedIn()){
+			   return logout();
+		   }
+		   return "/pages/login.xhtml";
+	   }
+	   
+	     public String logout() {
+             SecurityContextHolder.getContext().setAuthentication(null);
+             FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                             .clear();
+             return "/index.xhtml";
+     }
+
+	   
+	   
 	public String getName() {
 		return name;
 	}

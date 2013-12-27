@@ -7,17 +7,16 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:include src="/pages/include/head.xhtml"></ui:include>
-	<!-- <h:outputStylesheet library="css" name="default.css"/> -->
+	<!--  <h:outputStylesheet library="css" name="default.css"/>-->
 	<h:body onload="document.forms[0].elements['login:name'].focus()">
 		<script type="text/javascript">
 			function SetFocus () {
 				document.forms[0].elements["login:name"].focus();
 			}
 		</script>
-		<h:outputStylesheet name="index.css"/>
-
-			
+		<h:outputStylesheet name="index.css"/> 
 		<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
+		
 
 		<form id="login" method="post" action="/PictureCommunity/j_spring_security_check">
 			<table>
@@ -32,5 +31,11 @@
 			</table>
 			<input name="submit" type="submit" value="Anmelden"/>
 		</form>
+		
+		<h:form>
+		
+			<p:commandButton value="Registrieren" action="/pages/public/register.xhtml" />
+		</h:form>
+		
 	</h:body>
 </html>

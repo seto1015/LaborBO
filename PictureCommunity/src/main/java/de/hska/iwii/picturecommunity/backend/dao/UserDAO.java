@@ -33,11 +33,17 @@ public class UserDAO extends AbstractDAO {
 	class UserRowMapper implements RowMapper<User> {
 		@Override
 		public User mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+			User loadedUser = null;
 			User user = new User();
 			user.setId(resultSet.getInt("id"));
 
 			// Schon im Cache?
-			User loadedUser = loadedUsers.get(user).get();
+			WeakReference<User> loadedUserRef = loadedUsers.get(user);
+			if(loadedUserRef != null){
+				loadedUser = loadedUserRef.get();
+			}
+			
+			//User loadedUser = loadedUsers.get(user).get();
 			if (loadedUser != null) {
 				return loadedUser;
 			}
@@ -250,11 +256,11 @@ public class UserDAO extends AbstractDAO {
 	 * @return Gefundenes Anwender-Objekt oder <code>null</code>, falls es diesen Anwender nicht gibt.
 	 */
 	public User findUserByName(String userName) {
+		
 		String select = "SELECT * FROM member WHERE name = :name";
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("name", userName);
-
 		List<User> result = getNamedParameterJdbcTemplate().query(select, params, new UserRowMapper());	
 
 		return result.size() == 1 ? result.get(0) : null;
