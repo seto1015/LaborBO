@@ -35,7 +35,7 @@
 		<security:form-login
 			login-processing-url="/j_spring_security_check"
 			login-page="/pages/login.xhtml"
-			default-target-url="/pages/public/demo.xhtml"
+			default-target-url="/pages/private/pictures.xhtml"
 			authentication-failure-url="/pages/login.xhtml"/>
 		<security:intercept-url pattern="/login.xhtml" access="permitAll"/>
 		<security:intercept-url pattern="/pages/private/**" access="hasRole('user') or hasRole('admin')"/>

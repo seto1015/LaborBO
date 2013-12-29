@@ -24,7 +24,15 @@
 	        <p:row>  
 	            <p:column colspan="1" style="text-align: left"><p:graphicImage value="/resources/images/logo.png" /></p:column>
 	            <p:column style="text-align: left"><h1 id="headH1">Picture Community</h1></p:column>
-	            <p:column colspan="2" class="textNav" style="text-align: right; vertical-align: top; padding:8px">Menü</p:column>  
+	            
+	              <p:column colspan="1" style="text-align: right; vertical-align: top; padding:8px 15px">
+		            <h:form>
+		            <p:menuButton value="Admin" rendered="#{loginController.admin}">  
+				
+	    			</p:menuButton> 
+	    			  </h:form>         	
+	           	</p:column>
+
 	            <p:column colspan="1" style="text-align: right; vertical-align: top; padding:8px 15px">
 	            	<h:form>
 	            		<p:commandLink class="textNav" value="#{loginController.loggedIn ? 'Logout' : 'Login'}" action="#{loginController.loginOut}" />

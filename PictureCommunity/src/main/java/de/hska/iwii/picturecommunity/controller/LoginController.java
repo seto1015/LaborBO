@@ -40,6 +40,12 @@ public class LoginController implements Serializable{
 	
 	private String password;
 	
+	private boolean admin;
+	
+	private boolean loggedIn = false;
+	
+	private User currentUser;
+	
 	
 	public String newUser(){
 		
@@ -79,36 +85,34 @@ public class LoginController implements Serializable{
 				
 	}
 
-	public boolean getLoggedIn() {
-		SecurityContext sc = SecurityContextHolder.getContext();
-		 
-		if (sc.getAuthentication() != null && sc.getAuthentication().getPrincipal() instanceof User && sc.getAuthentication().isAuthenticated()) {
-			return true;
-		}
-		return false;
-	}
-	
-
-	
-	   public String login() throws ServletException, IOException{
-		      ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
+	   public String login() throws ServletException, IOException{ 
+		   ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
 		      HttpServletRequest request = ((HttpServletRequest)context.getRequest());
 		            
 		      ServletResponse resposnse = ((ServletResponse)context.getResponse());
 		      RequestDispatcher dispatcher = request.getRequestDispatcher("/PictureCommunity/j_spring_security_check");
 		      dispatcher.forward(request, resposnse);
+			  loggedIn = true;
+			  SecurityContext sc = SecurityContextHolder.getContext();
+			// User ist das Anwender-Objekt aus der Datenbank.
+			  this.currentUser = (User) sc.getAuthentication().getPrincipal();
+			  String userRole = currentUser.getRole();
+			  
+			  if(userRole.equals("user")){
+				  this.admin = false;
+			  }else if(userRole.equals("admin")){
+				  this.admin = true;
+			  }
+			  
+			  
 		      FacesContext.getCurrentInstance().responseComplete();
-
-		      if(getLoggedIn()){
-		    	  return "pages/public/demo.xhtml";
-		      }
 		      
 		      return null;
 		   }
 	
 	
 	   public String loginOut(){
-		   if(getLoggedIn()){
+		   if(this.loggedIn){
 			   return logout();
 		   }
 		   return "/pages/login.xhtml";
@@ -118,6 +122,7 @@ public class LoginController implements Serializable{
              SecurityContextHolder.getContext().setAuthentication(null);
              FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                              .clear();
+             loggedIn = false;
              return "/index.xhtml";
      }
 
@@ -150,6 +155,28 @@ public class LoginController implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
+	public boolean isLoggedIn() {
+//		SecurityContext sc = SecurityContextHolder.getContext();
+//		 
+//		if (sc.getAuthentication() != null && sc.getAuthentication().getPrincipal() instanceof User && sc.getAuthentication().isAuthenticated()) {
+//			return true;
+//		}
+//		return false;
+		return this.loggedIn;
+	}
+	
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
 	}
 	
 }

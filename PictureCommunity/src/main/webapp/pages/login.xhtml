@@ -19,7 +19,7 @@
 			
 		<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
 
-		 <h:form id="login" prependId="false" onsubmit="document.#{p:component('login')}.action='#{request.contextPath}/j_spring_security_check';">
+		 <h:form id="login" prependId="false">
               	<p:panel id="panel" header="Login" style="width:20%; margin-bottom:15px"	>  
               	<h:panelGrid columns="2" cellpadding="5">  
               
@@ -29,7 +29,7 @@
                	<h:outputLabel value="Password:" />
               	<p:password id="j_password" required="true" /> 
               
-            	<p:commandButton value="Login" type="submit" ajax="false" />
+            	<p:commandButton value="Login" action="#{loginController.login}" ajax="false" />
      </h:panelGrid>  
       </p:panel>
 	</h:form>
