@@ -11,7 +11,9 @@ import org.primefaces.model.SelectableDataModel;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import de.hska.iwii.picturecommunity.backend.dao.PictureDAO;
 import de.hska.iwii.picturecommunity.backend.dao.UserDAO;
+import de.hska.iwii.picturecommunity.backend.entities.Picture;
 import de.hska.iwii.picturecommunity.backend.entities.User;
 
 @Component
@@ -21,7 +23,9 @@ public class UserManagementController  implements Serializable{
 	
 	@Resource(name = "userDAO")
 	private UserDAO userDAO;
-	
+		
+	@Resource(name = "pictureDAO")
+	private PictureDAO pictureDAO;
 	
 	private List<User> users;
 	
@@ -39,11 +43,13 @@ public class UserManagementController  implements Serializable{
 	}
 
 
-	
 	public String deleteUser() {
-
+		List<Picture> pictures = pictureDAO.getPictures(selectedUser, 0, Integer.MAX_VALUE, false);
+		for (Picture picture : pictures) {
+			pictureDAO.deletePicture(picture);
+		}		
 		userDAO.deleteUser(selectedUser);
-
+		
 		return null;
 	}
 
