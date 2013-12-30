@@ -79,7 +79,11 @@ public class LoginController implements Serializable{
 				HttpSessionSecurityContextRepository.
 				SPRING_SECURITY_CONTEXT_KEY,
 				SecurityContextHolder.getContext());
-				return "/pages/private/private.xhtml";
+				
+				this.loggedIn = true;
+				this.currentUser = user;
+				this.admin = false;
+				return "/pages/private/pictures.xhtml";
 				}
 				return null;
 				
