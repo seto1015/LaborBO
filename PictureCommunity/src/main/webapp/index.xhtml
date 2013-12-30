@@ -9,6 +9,11 @@
 	<ui:include src="/pages/include/head.xhtml"></ui:include>
 	<h:outputStylesheet library="css" name="default.css"/>
 	
+	<f:metadata>
+		<f:event listener="#{pictureController.fetchData}"
+		type="preRenderView"/>
+	</f:metadata>
+	
 	<h:body>
 	<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
 

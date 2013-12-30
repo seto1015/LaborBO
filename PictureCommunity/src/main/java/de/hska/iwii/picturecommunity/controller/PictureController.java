@@ -33,7 +33,7 @@ public class PictureController implements Serializable{
 	@Resource(name = "loginController")
 	private LoginController loginController;
 	
-	private List<Picture> getImages; 
+	private List<Picture> images; 
 	
     private UploadedFile file;  
     
@@ -89,32 +89,35 @@ public class PictureController implements Serializable{
 		}
     }  
 	
-    public StreamedContent getImage() {
-    	FacesContext context = FacesContext.getCurrentInstance();
-    	if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-    	// 1. Phase: Rendern der HTML-Seite
-    	return new DefaultStreamedContent();
-    	}
-    	else {
-    	// Jetzt wird erst im zweiten Aufruf das Bild angefordert.
-    	String id = context.getExternalContext()
-    	.getRequestParameterMap().get("id");
-    	Picture pic = pictureDAO.getPicture(Integer.parseInt(id));
-    	return new DefaultStreamedContent(new ByteArrayInputStream(
-    	pic.getData()));
-    	}
-    	}
+	public StreamedContent getImage() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+			// 1. Phase: Rendern der HTML-Seite
+			return new DefaultStreamedContent();
+		} else {
+			// Jetzt wird erst im zweiten Aufruf das Bild angefordert.
+			String id = context.getExternalContext().getRequestParameterMap().get("id");
+			Picture pic = pictureDAO.getPicture(Integer.parseInt(id));
+			return new DefaultStreamedContent(new ByteArrayInputStream(pic.getData()));
+		}
+	}
     
     
-    public List<Picture> getImages() throws IOException {
-    	System.out.println(loginController.getCurrentUser());
+    public String fetchData() throws IOException{
     	List<Picture> pictures = pictureDAO.getPictures(loginController.getCurrentUser(), 0, 10, false);
     	for (Picture picture : pictures) {
     		picture.setData(ImageUtils.scale(picture.getData(), 500, 313)); 		
 		}
-    	return pictures;
-    	}
-
+    	this.images = pictures;
+    	
+    	return null;	
+    }
+    
+    
+	public List<Picture> getImages() {
+		return images;
+	}
+    
 	public boolean isPublicVisable() {
 		return publicVisable;
 	}
