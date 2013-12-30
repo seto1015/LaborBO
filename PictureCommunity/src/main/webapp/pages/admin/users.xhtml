@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<ui:include src="/pages/include/head.xhtml"></ui:include>
+	<h:outputStylesheet library="css" name="default.css"/>
+	
+	<f:metadata>
+		<f:event listener="#{userManagementController.fetchData}"
+		type="preRenderView"/>
+	</f:metadata>
+	
+	<h:body>
+	<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
+
+<h:form>
+<p:dataTable id="userManager" var="user" value="#{userManagementController.users}" style="width:80%">  
+  
+        <f:facet name="header">  
+            Benutzerverwaltung 
+        </f:facet>  
+    
+        <p:column headerText="ID" style="width:4%">  
+            #{user.id}  
+        </p:column>  
+  
+        <p:column headerText="Name" style="width:25%">  
+            #{user.name}  
+        </p:column>  
+  
+        <p:column headerText="Email" style="width:25%">  
+            #{user.email}  
+        </p:column>  
+  
+        <p:column headerText="Rolle" style="width:25%">  
+            #{user.role}  
+        </p:column> 
+        
+         <p:column headerText="Bilder" style="width:20%">  
+           
+        </p:column> 
+          
+  		<p:column style="width:8%">  
+                <p:commandButton id="selectButton" action="#{userManagementController.deleteUser()}" update="@form" process="@this" icon="ui-icon-trash" title="View" ajax="true">  
+                <f:setPropertyActionListener value="#{user}" target="#{userManagementController.selectedUser}" />  
+            </p:commandButton>  
+        </p:column>	
+  	
+  	  <f:facet name="footer">  
+        	Momentan gibt es #{fn:length(userManagementController.users)} Benutzer.   
+        </f:facet>  
+    </p:dataTable>  
+
+</h:form>
+
+
+	</h:body>
+</html>
