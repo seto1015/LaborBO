@@ -34,15 +34,26 @@ public class PictureDAO extends AbstractDAO {
 	class PictureRowMapper implements RowMapper<Picture> {
 		@Override
 		public Picture mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+			Picture loadedPicture = null;
 			Picture picture = new Picture();
 			picture.setId(resultSet.getInt("id"));
 			
+			
+//			WeakReference<User> loadedUserRef = loadedUsers.get(user);
+//			if(loadedUserRef != null){
+//				loadedUser = loadedUserRef.get();
+//			}
+			
 			// Schon im Cache?
-			Picture loadedPicture = loadedPictures.get(picture).get();
-			if (loadedPicture != null) {
-				return loadedPicture;
+			WeakReference<Picture> loadedPictureRef = loadedPictures.get(picture);  
+			if (loadedPictureRef != null) {
+				loadedPicture = loadedPictureRef.get();
 			}
 
+			if(loadedPicture != null){
+				return loadedPicture;
+			}
+			
 			picture.setMimeType(resultSet.getString("mimeType"));
 			picture.setData(resultSet.getBytes("data"));
 			picture.setDescription(resultSet.getString("description"));

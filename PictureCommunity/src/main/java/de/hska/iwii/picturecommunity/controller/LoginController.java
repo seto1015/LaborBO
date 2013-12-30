@@ -126,6 +126,7 @@ public class LoginController implements Serializable{
              FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                              .clear();
              loggedIn = false;
+             currentUser = null;
              return "/index.xhtml";
      }
 
