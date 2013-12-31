@@ -53,7 +53,7 @@ public class PictureController implements Serializable{
     
     
     public void upload() { 
-		if (file != null) {
+		if (file.getSize() > 0) {
 			User user = loginController.getCurrentUser();
 			Picture picture = new Picture();
 
