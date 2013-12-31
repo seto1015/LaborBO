@@ -118,6 +118,14 @@ public class LoginController implements Serializable{
 		return null;
 	}
 	
+	public String homeNavigation() {
+		if (this.loggedIn) {
+			return "/pages/private/pictures.xhtml";
+		}
+		return "/index.xhtml";
+	}
+	
+	
 	   public String loginOut(){
 		   if(this.loggedIn){
 			   return logout();
