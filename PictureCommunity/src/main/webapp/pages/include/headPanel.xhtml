@@ -6,7 +6,7 @@
 	
 	
 	<style type="text/css">
-		.mypanelgrid td {
+		.headPanelGrid td {
 			border-style: none !important;
 			padding: 2px 2px;
 		}
@@ -16,10 +16,13 @@
 		.textNav {
 			font-size: 15px !important;
 		}	
+		.noBorderGridPanel tr, .noBorderGridPanel td {
+    		border: none;
+		}
 		
 	</style>
 	
-	<p:panelGrid style="width:100%; margin-bottom:10px" styleClass="mypanelgrid">  
+	<p:panelGrid style="width:100%; margin-bottom:10px" styleClass="headPanelGrid">  
 	    <f:facet name="header">  
 	        <p:row>  
 	            <p:column colspan="1" style="text-align: left"><p:graphicImage value="/resources/images/logo.png" /></p:column>
@@ -29,7 +32,7 @@
 		            <h:form>
 		            <p:menuButton value="Admin" rendered="#{loginController.admin}">  
 					 	<p:menuitem value="Benutzerverwaltung" action="/pages/admin/users.xhtml" icon="ui-icon-person"/>  
-				 		<p:menuitem value="Auswertungen" action="/pages/admin/users.xhtml" icon="ui-icon-note"/> 
+				 		<p:menuitem value="Auswertungen" action="/pages/admin/statistics.xhtml" icon="ui-icon-note"/> 
 	    			</p:menuButton> 
 	    			  </h:form>         	
 	           	</p:column>

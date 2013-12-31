@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:include src="/pages/include/head.xhtml"></ui:include>
+	<h:outputStylesheet library="css" name="default.css"/>
+	
+	<f:metadata>
+		<f:event listener="#{statisticsController.fetchData}"
+		type="preRenderView"/>
+	</f:metadata>
+	
+	
+	
+	<h:body>
+	<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
+
+
+	<h:form id="barForm">
+	
+	
+	
+	<p:barChart id="bar" value="#{statisticsController.mostUploadedModel}" legendPosition="ne"  
+            title="Hochgeladene Bilder" min="0" max="50" style="width:95%; height:350px" animate="true"/> 
+	
+	 <h:panelGrid columns="3" cellpadding="5">    
+	
+	   
+           	<h:outputLabel for="userAmount" value="Benutzeranzahl: "/>
+          	
+          	<p:inputText style="width:25px" id="userAmount" value="#{statisticsController.userAmount}" label="Benutzeranzahl" required="true">
+          	<f:convertNumber />
+          	</p:inputText>
+          	
+          	<h:message for="userAmount" style="color:red" />  
+             
+	</h:panelGrid>
+	<p:commandButton id="generateButton" value="Diagramm erstellen" update="barForm" />
+	</h:form>
+
+
+
+
+	</h:body>
+</html>

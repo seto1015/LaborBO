@@ -40,11 +40,7 @@
         <p:column headerText="Rolle" style="width:25%">  
             #{user.role}  
         </p:column> 
-        
-         <p:column headerText="Bilder" style="width:20%">  
-           
-        </p:column> 
-          
+                
   		<p:column style="width:8%">  
                 <p:commandButton id="selectButton" action="#{userManagementController.deleteUser()}" update="@form" process="@this" icon="ui-icon-trash" title="View" ajax="true">  
                 <f:setPropertyActionListener value="#{user}" target="#{userManagementController.selectedUser}" />  
