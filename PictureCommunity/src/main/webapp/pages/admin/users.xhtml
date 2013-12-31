@@ -16,44 +16,40 @@
 	</f:metadata>
 	
 	<h:body>
-	<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
-
-<h:form>
-<p:dataTable id="userManager" var="user" value="#{userManagementController.users}" style="width:80%">  
-  
-        <f:facet name="header">  
-            Benutzerverwaltung 
-        </f:facet>  
-    
-        <p:column headerText="ID" style="width:4%; text-align:center">  
-            #{user.id}  
-        </p:column>  
-  
-        <p:column headerText="Name" style="width:30%">  
-            #{user.name}  
-        </p:column>  
-  
-        <p:column headerText="Email" style="width:30%">  
-            #{user.email}  
-        </p:column>  
-  
-        <p:column headerText="Rolle" style="width:30%">  
-            #{user.role}  
-        </p:column> 
-                
-  		<p:column style="width:6%; text-align:center">  
-                <p:commandButton id="selectButton" action="#{userManagementController.deleteUser()}" update="@form" process="@this" icon="ui-icon-trash" title="View" ajax="true">  
-                <f:setPropertyActionListener value="#{user}" target="#{userManagementController.selectedUser}" />  
-            </p:commandButton>  
-        </p:column>	
-  	
-  	  <f:facet name="footer">  
-        	Momentan gibt es #{fn:length(userManagementController.users)} Benutzer.   
-        </f:facet>  
-    </p:dataTable>  
-
-</h:form>
-
-
+		<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
+		
+		<h:form>
+			<p:dataTable id="userManager" var="user" value="#{userManagementController.users}" style="width:80%">  	  
+			        <f:facet name="header">  
+			            Benutzerverwaltung 
+			        </f:facet>  
+			    
+			        <p:column headerText="ID" style="width:4%; text-align:center">  
+			            #{user.id}  
+			        </p:column>  
+			  
+			        <p:column headerText="Name" style="width:30%">  
+			            #{user.name}  
+			        </p:column>  
+			  
+			        <p:column headerText="Email" style="width:30%">  
+			            #{user.email}  
+			        </p:column>  
+			  
+			        <p:column headerText="Rolle" style="width:30%">  
+			            #{user.role}  
+			        </p:column> 
+			                
+			  		<p:column style="width:6%; text-align:center">  
+			         	<p:commandButton id="selectButton" action="#{userManagementController.deleteUser()}" update="@form" process="@this" icon="ui-icon-trash" title="View" ajax="true">  
+			                <f:setPropertyActionListener value="#{user}" target="#{userManagementController.selectedUser}" />  
+			            </p:commandButton>  
+			        </p:column>	
+			  	
+			  	  	<f:facet name="footer">  
+			       		Momentan gibt es #{fn:length(userManagementController.users)} Benutzer.   
+			       	</f:facet>  
+			    </p:dataTable>  
+		</h:form>
 	</h:body>
 </html>

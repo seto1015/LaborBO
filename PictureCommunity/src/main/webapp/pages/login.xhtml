@@ -8,38 +8,31 @@
 
 	<ui:include src="/pages/include/head.xhtml"></ui:include>
 	<h:outputStylesheet library="css" name="default.css"/>
-	<h:body onload="document.forms[0].elements['login:name'].focus()">
-		<script type="text/javascript">
-			function SetFocus () {
-				document.forms[0].elements["login:name"].focus();
-			}
-		</script>
-		<h:outputStylesheet name="index.css"/>
-
-			
+	
+	<h:body>	
 		<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
 
-		 <h:form id="login" prependId="false">
+		 <h:form id="login" prependId="false">	
               	<p:panel id="panel" header="Login" style="width:20%; margin-bottom:15px"	>  
-              	<h:panelGrid columns="2" cellpadding="5">  
-              
-               	<h:outputLabel value="Username:" />
-               	<p:inputText id="j_username" required="true" />
+              		<p:focus context="panel"/>  
+              	
+              		<h:panelGrid columns="2" cellpadding="5">  
+               			<h:outputLabel value="Username:" />
+               			<p:inputText id="j_username" required="true" />
                
-               	<h:outputLabel value="Password:" />
-              	<p:password id="j_password" required="true" /> 
+               			<h:outputLabel value="Password:" />
+              			<p:password id="j_password" required="true" /> 
               
-            	<p:commandButton value="Login" action="#{loginController.login}" ajax="false" />
-     </h:panelGrid>  
-      </p:panel>
-	</h:form>
+            			<p:commandButton value="Login" action="#{loginController.login}" ajax="false" />
+     				</h:panelGrid>  
+      			</p:panel>
+		</h:form>
 	
-	<h:form>
-		<p>Noch nicht registriert? 
-		 Kein Problem, einfach jetzt kostenlos über den unteren Button registrieren und Teil der riesigen Picture Community werden!</p>
-	 	
-    	<p:commandButton value="Registrieren" action="/pages/public/register.xhtml" />
-   	</h:form>
-	
+		<h:form>
+			<p>Noch nicht registriert? 
+			 Kein Problem, einfach jetzt kostenlos über den unteren Button registrieren und Teil der riesigen Picture Community werden!</p>
+		 	
+	    	<p:commandButton value="Registrieren" action="/pages/public/register.xhtml" />
+   		</h:form>	
 	</h:body>
 </html>

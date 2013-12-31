@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
@@ -111,7 +113,6 @@ public class LoginController implements Serializable{
 			} else if (userRole.equals("admin")) {
 				this.admin = true;
 			}
-
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 
