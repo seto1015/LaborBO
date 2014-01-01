@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="de">
+	<!--<![endif]-->
+	<head>
+		<meta charset="UTF-8" />
+		<base href="/PictureCommunity/pages/webapp/" />
+		<meta name="viewport" content="width=device-width" />
+		<title>PictureCommunity</title>
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/blitzer/jquery-ui-1.10.3.custom.min.css" />
+
+		<script src="js/libs/jquery-1.10.2.min.js"></script>
+		<script src="js/libs/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="js/libs/jquery.iframe-transport.js"></script>
+		<script src="js/libs/jquery.fileupload.js"></script>
+		<script src="js/app.js"></script>
+
+	</head>
+	<body>
+
+		<!--  DIALOGS -->
+		<div id="dlgPicture" title="">
+			<img src="img/spinner.gif" />
+			<span class="description"></span>
+		</div>
+
+		<div id="dlgUpload" title="Upload erfolgreich">
+			Das Bild wurde erfolgreich auf den Server übertragen.
+		</div>
+
+		<div id="header">
+
+			<div class="logo">
+				Super PictureCommunity Logo
+			</div>
+
+			<div class="menu hidden">
+				<a href="#ownImages">Eigene Bilder</a>
+				<a href="#uploadImage">Bilder hochladen</a>
+				<a href="#allImages">Alle Bilder</a>
+			</div>
+
+			<div class="userInfo hidden">
+				<button id="btnLogout">
+					abmelden
+				</button>
+				<br />
+				Angemeldet als: <span class="username">max.muster</span>
+				<br />
+			</div>
+		</div>
+
+		<div id="pageContent">
+
+			<!-- START PAGES -->
+			<div class="page page-uploadImage hidden">
+				<h1>Upload</h1>
+
+				<fieldset class="username">
+					<label>Bild</label>
+					<input type="file" name="file" id="fileupload" />
+				</fieldset>
+				<fieldset class="username">
+					<label>Öffentlich</label>
+					<input type="checkbox" name="public" />
+				</fieldset>
+				<fieldset class="username">
+					<label>Beschreibung</label>
+					<textarea name="description"></textarea>
+				</fieldset>
+
+				<button id="btnUpload">
+					Bild hochladen
+				</button>
+
+			</div>
+
+			<div class="page page-foreignPictures hidden">
+				<h1></h1>
+
+				<div class="thumbnails">
+
+				</div>
+
+			</div>
+
+			<div class="page page-login">
+				<h1>Anmelden</h1>
+
+				<div id="loginError" class="ui-state-error ui-corner-all hidden" style="padding: 8px; font-size: 14px; margin-bottom: 20px;">
+					<p>
+						<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+						<span style="font-weight: bold;">Fehler:</span> Die eingegebenen Zugangsdaten waren leider nicht korrekt.
+					</p>
+				</div>
+
+				<fieldset class="username">
+					<label>Benutzername</label>
+					<input type="text" name="username" />
+				</fieldset>
+
+				<fieldset class="password">
+					<label>Kennwort</label>
+					<input type="password" name="password" />
+				</fieldset>
+
+				<button id="btnLogin">
+					anmelden
+				</button>
+
+			</div>
+
+			<!-- END PAGES -->
+
+			<div class="friendList hidden">
+				<h2>Meine Freunde</h2>
+				<button id="btnReloadFriends"></button>
+				<div class="spinner"></div>
+			</div>
+
+		</div>
+
+		<div id="footer">
+			<div class="left">
+				&copy; 2014 Michael Klein, Tobias Sernatinger, Tobias Keller
+			</div>
+			<div class="right">
+				<div id="loadingIndicator" class="hidden">
+					Lade Daten..
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+
+	</body>
+</html>
