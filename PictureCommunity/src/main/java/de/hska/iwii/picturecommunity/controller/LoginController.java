@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.Resource;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
@@ -127,20 +125,22 @@ public class LoginController implements Serializable{
 	}
 	
 	
-	   public String loginOut(){
+	   public String loginOut() throws IOException{
 		   if(this.loggedIn){
 			   return logout();
 		   }
 		   return "/pages/login.xhtml";
 	   }
 	   
-	     public String logout() {
+	     public String logout() throws IOException {
              SecurityContextHolder.getContext().setAuthentication(null);
              FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                              .clear();
              loggedIn = false;
              currentUser = null;
-             return "/index.xhtml";
+             
+             FacesContext.getCurrentInstance().getExternalContext().redirect("/PictureCommunity/index.xhtml");
+             return null;
      }
 
 	   

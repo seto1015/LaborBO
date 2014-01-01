@@ -17,9 +17,9 @@
 	<h:body>
 		<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
 	
-		<h3>Bilder</h3>  
-		<p:galleria value="#{pictureController.images}" var="img" panelWidth="500" panelHeight="313" effect="clip">  
-	    	<p:graphicImage value="#{pictureController.image}" alt="#{img.name}" title="#{img.name}">
+		<h3>Öffentliche Bildergalerie</h3>  
+		<p:galleria value="#{pictureController.images}" var="img" panelWidth="500" panelHeight="313" effect="clip" showCaption="true">  
+	    	<p:graphicImage value="#{pictureController.image}" alt="#{img.owner.name} &nbsp; &nbsp; &nbsp; #{img.publicVisible ? 'öffentlich' : 'privat'}" title="#{img.name}">
 	    	 	<f:param name="id" value="#{img.id}" />
 			</p:graphicImage> 
 		</p:galleria>  

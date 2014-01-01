@@ -15,18 +15,27 @@
 	
 	<h:body>
 		<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
-	
-		<h3>Bilder</h3>  
-		<p:galleria value="#{pictureController.images}" var="img" panelWidth="500" panelHeight="313" effect="clip">  
-	    	<p:graphicImage value="#{pictureController.image}" alt="#{img.name}" title="#{img.name}">
+<h:form id="galleria">	
+		<h3>#{pictureController.selectedUser.name}'s Bildergalerie</h3>  
+		<p:galleria value="#{pictureController.images}" var="img" panelWidth="500" panelHeight="313" effect="clip" showCaption="true">  
+	    	<p:graphicImage value="#{pictureController.image}" alt="#{img.owner.name} &nbsp; &nbsp; &nbsp; #{img.publicVisible ? 'öffentlich' : 'privat'}" title="#{img.name}">
 	    	 	<f:param name="id" value="#{img.id}" />
 			</p:graphicImage> 
 		</p:galleria>  
 
+
+   <h:outputText value="Benutzer " />  
+        <p:selectOneMenu value="#{pictureController.selectedUser}" effect="fade" converter="#{userConverter}" panelStyle="width:150px" style="width:160px"  filter="true" filterMatchMode="startsWith">  
+            <f:selectItem itemLabel="Select One" itemValue="" />  
+            <f:selectItems value="#{pictureController.users}" var="user" itemLabel="#{user.name}" itemValue="#{user}"/>  
+        </p:selectOneMenu>  
+
+ 		<p:commandButton value="Bilder anzeigen" actionListener="#{pictureController.updateGallerie}" ajax="false" />  
+</h:form>
+
+
 		<h:form enctype="multipart/form-data">  
-		  		
 		    <p:messages showDetail="true"/>  
-		  
 		  	<p:panelGrid style="margin-top:20px">
 		  	    <f:facet name="header">  
         			<p:row>  

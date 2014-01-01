@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
+import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -19,6 +21,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import de.hska.iwii.picturecommunity.backend.dao.PictureDAO;
+import de.hska.iwii.picturecommunity.backend.dao.UserDAO;
 import de.hska.iwii.picturecommunity.backend.entities.Picture;
 import de.hska.iwii.picturecommunity.backend.entities.User;
 import de.hska.iwii.picturecommunity.backend.utils.ImageUtils;
@@ -33,24 +36,37 @@ public class PictureController implements Serializable{
 	@Resource(name = "loginController")
 	private LoginController loginController;
 	
+	@Resource(name = "userDAO")
+	private UserDAO userDAO;
+	
 	private List<Picture> images; 
 	
     private UploadedFile file;  
     
     private boolean publicVisable;
     
-    
-    public UploadedFile getFile() {  
-        return file;  
-    }  
-  
-    public void setFile(UploadedFile file) {  
-        this.file = file;  
-    }  
-  
+ 	private User selectedUser;
+ 	
+ 	private List<User> users;
     
     
-    
+	public String fetchData() throws IOException {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
+		HttpServletRequest rq = (HttpServletRequest) ec.getRequest();
+
+		if (rq.getMethod().equals("GET")) {
+			selectedUser = loginController.getCurrentUser();
+
+			List<Picture> pictures = pictureDAO.getPictures(selectedUser, 0, 10, false);
+			for (Picture picture : pictures) {
+				picture.setData(ImageUtils.scale(picture.getData(), 500, 313));
+			}
+			this.images = pictures;
+			users = userDAO.findUsersByName("*", null);
+		}
+		return null;
+	}
     
     public void upload() { 
 		if (file.getSize() > 0) {
@@ -103,21 +119,30 @@ public class PictureController implements Serializable{
 	}
     
     
-    public String fetchData() throws IOException{
-    	List<Picture> pictures = pictureDAO.getPictures(loginController.getCurrentUser(), 0, 10, false);
+   public String updateGallerie() throws IOException{
+	   	List<Picture> pictures = pictureDAO.getPictures(selectedUser, 0, 10, false);
     	for (Picture picture : pictures) {
     		picture.setData(ImageUtils.scale(picture.getData(), 500, 313)); 		
 		}
     	this.images = pictures;
-    	
-    	return null;	
-    }
+	   
+	   
+	   return null;   
+   }
     
     
 	public List<Picture> getImages() {
 		return images;
 	}
     
+    public UploadedFile getFile() {  
+        return file;  
+    }  
+  
+    public void setFile(UploadedFile file) {  
+        this.file = file;  
+    } 
+	
 	public boolean isPublicVisable() {
 		return publicVisable;
 	}
@@ -126,6 +151,19 @@ public class PictureController implements Serializable{
 		this.publicVisable = publicVisable;
 	}
 
+	public User getSelectedUser() {
+		return selectedUser;
+	}
+
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+	}
+
+
+	public List<User> getUsers() {		
+		return users;
+	}
 
 
 }
