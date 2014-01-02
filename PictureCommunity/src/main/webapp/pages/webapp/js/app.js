@@ -47,7 +47,7 @@ function displayForeignPictures(username) {
 
 	// set topic
 	if (username == '*') {
-		$('.page-foreignPictures > h1').text('Alle Bilder');
+		$('.page-foreignPictures > h1').text('Öffentliche Bilder');
 	} else if (username == APP_USERNAME) {
 		$('.page-foreignPictures > h1').text('Eigene Bilder');
 	} else {
@@ -96,7 +96,10 @@ $(function() {
 		modal : true,
 		autoOpen : false,
 		width: 850,
-		heigth: 700
+		heigth: 700,
+		close: function() {
+			$('#dlgPicture').find('img').attr('src', 'img/preload-image.gif');
+		}
 	});
 
 	$('#dlgUpload').dialog({
@@ -184,7 +187,7 @@ $(function() {
 				$('#btnLogin').removeAttr('disabled');
 			},
 			success : function(data) {
-				console.debug(data);
+				//console.debug(data);
 				if (data.token != undefined && data.token != null) {
 
 					APP_USERNAME = $('.page-login').find('input[name="username"]').val();
