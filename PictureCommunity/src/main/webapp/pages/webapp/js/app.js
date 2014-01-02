@@ -188,7 +188,7 @@ $(function() {
 			},
 			success : function(data) {
 				//console.debug(data);
-				if (data.token != undefined && data.token != null) {
+				if (data.token != undefined && data.token != '-1') {
 
 					APP_USERNAME = $('.page-login').find('input[name="username"]').val();
 

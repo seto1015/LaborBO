@@ -92,7 +92,12 @@ public class RESTController {
 	@RequestMapping(value="/token", method=RequestMethod.GET)
 	public @ResponseBody Token generateToken(@RequestParam String username, @RequestParam String password) {
 		Logger.getLogger(this.getClass().getName()).log(Level.INFO, "REST: /token/" + " [UserName: " + username + ", Password: " + password + "]");
-		return new Token(Base64.encodeToString((username + ":" + password).getBytes(), false));
+		
+		if (this.getUser(Base64.encodeToString((username + ":" + password).getBytes(), false)) == null) {
+			return new Token("-1");
+		} else {
+			return new Token(Base64.encodeToString((username + ":" + password).getBytes(), false));
+		}
 	}	
 
 	/**
