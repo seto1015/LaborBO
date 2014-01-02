@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="de">
+	<!--<![endif]-->
+	<head>
+		<meta charset="UTF-8" />
+		<base href="/PictureCommunity/pages/mobileapp/" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>PictureCommunity</title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.0.min.css" />
+
+		<script src="js/libs/jquery-1.10.2.min.js"></script>
+		<script src="js/libs/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="js/libs/jquery.mobile-1.4.0.min.js"></script>
+		<script src="js/libs/jquery.iframe-transport.js"></script>
+		<script src="js/libs/jquery.fileupload.js"></script>
+		<script src="js/app.js"></script>
+	</head>
+	<body>
+
+
+		<div data-role="page"id="pgLogin">
+			<div data-role="header">
+				<h1>PictureCommunity</h1>
+			</div>
+			
+			<div role="main" class="ui-content">
+				
+				<label for="username">Benutzername:</label>
+				<input name="username" id="username" value="" type="text">
+				
+				<label for="password">Passwort:</label>
+				<input name="password" id="password" autocomplete="off" type="password">
+				
+				<a href="#" id="btnLogin" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-btn-icon-left ui-icon-lock">Login</a>
+				
+			</div>
+			
+			
+			<div data-role="footer">
+				<h4>&copy; 2014 Michael Klein, Tobias Sernatinger, Tobias Keller</h4>
+			</div>
+		</div>
+
+
+
+
+		<!-- PAGE EIGENE BILDER -->
+		<div data-role="page" id="pgOwnImages">
+			<div data-role="header">
+				<a href="#btnLogout" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-lock">logout</a>
+				<h1>Meine Bilder</h1>
+				</div>
+			
+			<div role="main" class="ui-content">
+				<div class="ui-grid-b thumbnail-grid">
+				</div>
+			</div>
+			
+			<div data-role="footer">
+				 <div data-role="navbar">
+		            <ul>
+		            	<li><a href="#pgOwnImages" data-icon="camera" class="ui-btn-active">Meine Bilder</a></li>
+		                <li><a href="#pgAllImages" data-icon="grid">Alle Bilder</a></li>
+		                <li><a href="#pgFriends" data-icon="user">Freunde</a></li>
+		                <li><a href="#pgUploadImage" data-icon="arrow-u">Bild Upload</a></li>
+		            </ul>
+		        </div>
+			</div>
+		</div>
+		
+		
+		
+		<!-- PAGE AllE BILDER -->
+		<div data-role="page" id="pgAllImages">
+			<div data-role="header">
+				<a href="#btnLogout" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-lock">logout</a>
+				<h1>Öffentliche Bilder</h1>
+				</div>
+			
+			<div role="main" class="ui-content">
+				<div class="ui-grid-b thumbnail-grid">
+				</div>
+			</div>
+			
+			<div data-role="footer">
+				 <div data-role="navbar">
+		            <ul>
+		            	<li><a href="#pgOwnImages" data-icon="camera">Meine Bilder</a></li>
+		                <li><a href="#pgAllImages" data-icon="grid" class="ui-btn-active">Alle Bilder</a></li>
+		                <li><a href="#pgFriends" data-icon="user">Freunde</a></li>
+		                <li><a href="#pgUploadImage" data-icon="arrow-u">Bild Upload</a></li>
+		            </ul>
+		        </div>
+			</div>
+		</div>
+
+
+		<!-- PAGE BILDER VON FREUNDEN -->
+		<div data-role="page" id="pgImagesOfFriend">
+			<div data-role="header">
+				<a href="#pgFriends" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">zurück</a>
+				<h1>Bilder von <span class="friend-username"></span></h1>
+				</div>
+			
+			<div role="main" class="ui-content">
+				<div class="ui-grid-b thumbnail-grid">
+				</div>
+			</div>
+			
+			<div data-role="footer">
+				 <div data-role="navbar">
+		            <ul>
+		            	<li><a href="#pgOwnImages" data-icon="camera">Meine Bilder</a></li>
+		                <li><a href="#pgAllImages" data-icon="grid">Alle Bilder</a></li>
+		                <li><a href="#pgFriends" data-icon="user" class="ui-btn-active">Freunde</a></li>
+		                <li><a href="#pgUploadImage" data-icon="arrow-u">Bild Upload</a></li>
+		            </ul>
+		        </div>
+			</div>
+		</div>
+		
+		
+		
+		<!-- PAGE IMAGE FULLSCREEN -->
+		<div data-role="page" id="pgFullImage">
+			<div data-role="header">
+				<a href="#back" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-arrow-l">zurück</a>
+				<h1></h1>
+				</div>
+			
+			<div role="main" class="ui-content" style="background-image: url('css/images/ajax-loader.gif'); background-repeat: no-repeat; background-position: center center;">
+				<img src="img/blank.png" style="width:100%;" id="fullImage">
+				<div id="fullImageDescription"></div>
+			</div>
+			
+			<div data-role="footer">
+				 <div data-role="navbar">
+		            <ul>
+		            	<li><a href="#pgOwnImages" data-icon="camera">Meine Bilder</a></li>
+		                <li><a href="#pgAllImages" data-icon="grid">Alle Bilder</a></li>
+		                <li><a href="#pgFriends" data-icon="user" class="ui-btn-active">Freunde</a></li>
+		                <li><a href="#pgUploadImage" data-icon="arrow-u">Bild Upload</a></li>
+		            </ul>
+		        </div>
+			</div>
+		</div>
+		
+
+
+		<!-- PAGE FREUNDE -->
+		<div data-role="page" id="pgFriends">
+			<div data-role="header">
+				<a href="#btnLogout" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-lock">logout</a>
+				<h1>Meine Freunde</h1>
+				</div>
+			
+			<div role="main" class="ui-content">
+				<div class="friendList">
+					
+				</div>
+			</div>
+			
+			<div data-role="footer">
+				 <div data-role="navbar">
+		            <ul>
+		            	<li><a href="#pgOwnImages" data-icon="camera">Meine Bilder</a></li>
+		                <li><a href="#pgAllImages" data-icon="grid">Alle Bilder</a></li>
+		                <li><a href="#pgFriends" data-icon="user" class="ui-btn-active">Freunde</a></li>
+		                <li><a href="#pgUploadImage" data-icon="arrow-u">Bild Upload</a></li>
+		            </ul>
+		        </div>
+			</div>
+		</div>
+		
+		
+		
+		
+		<!-- PAGE UPLOAD -->
+		<div data-role="page" id="pgUploadImage">
+			<div data-role="header">
+				<a href="#btnLogout" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-lock">logout</a>
+				<h1>Bild Upload</h1>
+				</div>
+			
+			<div role="main" class="ui-content">
+				
+				<label for="image">Bild:</label>
+				<input name="file" id="image" value="" type="file">
+				
+				<label for="public">Öffentlich:</label>
+				<select name="public" id="public" data-role="slider">
+				    <option value="0" selected>Nein</option>
+				    <option value="1">Ja</option>
+				</select>
+				
+				<label for="description">Beschreibung:</label>
+				<textarea cols="40" rows="8" name="description" id="description"></textarea>
+				
+				<a href="#" id="btnUpload" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-btn-icon-left ui-icon-arrow-u">Hochladen</a>
+				
+			</div>
+			
+			<div data-role="footer">
+				 <div data-role="navbar">
+		            <ul>
+		            	<li><a href="#pgOwnImages" data-icon="camera">Meine Bilder</a></li>
+		                <li><a href="#pgAllImages" data-icon="grid">Alle Bilder</a></li>
+		                <li><a href="#pgFriends" data-icon="user">Freunde</a></li>
+		                <li><a href="#pgUploadImage" data-icon="arrow-u" class="ui-btn-active">Bild Upload</a></li>
+		            </ul>
+		        </div>
+			</div>
+		</div>
+		
+
+	</body>
+</html>
