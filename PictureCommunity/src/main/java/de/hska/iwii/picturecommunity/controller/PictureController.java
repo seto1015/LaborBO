@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.faces.context.ExternalContext;
@@ -68,7 +69,7 @@ public class PictureController implements Serializable{
 		return null;
 	}
     
-    public void upload() { 
+    public void upload() throws IOException { 
 		if (file.getSize() > 0) {
 			User user = loginController.getCurrentUser();
 			Picture picture = new Picture();
@@ -102,6 +103,7 @@ public class PictureController implements Serializable{
 			picture.setPublicVisible(isPublicVisable());
 			
 			pictureDAO.createPicture(user, picture);
+			updateGalleria();
 		}
     }  
 	
@@ -119,17 +121,51 @@ public class PictureController implements Serializable{
 	}
     
     
-   public String updateGallerie() throws IOException{
-	   	List<Picture> pictures = pictureDAO.getPictures(selectedUser, 0, 10, false);
+   public String updateGalleria() throws IOException{
+	   	System.out.println("Gallerie update!!!");
+	  
+	   	User loggedInUser = loginController.getCurrentUser();
+	   	Set<User> friends = loggedInUser.getFriendsOf();
+	 	boolean onlyPublicVisable = true;
+	   	
+	 	if(selectedUser.equals(loggedInUser) || friends.contains(selectedUser)){
+	   		onlyPublicVisable = false;
+	   	}
+	   	
+	   	List<Picture> pictures = pictureDAO.getPictures(selectedUser, 0, 10, onlyPublicVisable);
     	for (Picture picture : pictures) {
     		picture.setData(ImageUtils.scale(picture.getData(), 500, 313)); 		
 		}
     	this.images = pictures;
 	   
-	   
 	   return null;   
    }
     
+   
+   public String addFriend(){
+	
+	 User loggedInUser = loginController.getCurrentUser();
+	  
+	 Set<User> friends = loggedInUser.getFriendsOf();
+	 
+	 if(friends.contains(selectedUser)){
+		 System.out.println(loggedInUser.getName() + " ist bereits mit " + selectedUser.getName() + " befreundet!!");
+	 }else{
+		 loggedInUser.getFriendsOf().add(selectedUser);
+		 userDAO.updateUser(loggedInUser);
+		 loginController.updateCurrentUser();
+	 }
+	   return null;
+	   
+   }
+   
+	public String homeGalleria() throws IOException {
+
+		selectedUser = loginController.getCurrentUser();
+		updateGalleria();
+		return null;
+
+	}
     
 	public List<Picture> getImages() {
 		return images;

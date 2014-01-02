@@ -30,7 +30,9 @@
             <f:selectItems value="#{pictureController.users}" var="user" itemLabel="#{user.name}" itemValue="#{user}"/>  
         </p:selectOneMenu>  
 
- 		<p:commandButton value="Bilder anzeigen" actionListener="#{pictureController.updateGallerie}" ajax="false" />  
+ 		<p:commandButton value="Bilder anzeigen" actionListener="#{pictureController.updateGalleria}" ajax="false" /> 
+ 		<p:commandButton value="Als freund hinzufügen" action="#{pictureController.addFriend}" ajax="false" />
+ 		<p:commandButton action="#{pictureController.homeGalleria}" icon="ui-icon-home" ajax="false" />  
 </h:form>
 
 
@@ -53,6 +55,9 @@
 		 			<p:column><p:commandButton value="Hochladen" ajax="false" actionListener="#{pictureController.upload}"/></p:column>  
 		        </p:row>
 		  	</p:panelGrid>
-		</h:form>  
+		</h:form>
+		
+
+		  
 	</h:body>
 </html>
