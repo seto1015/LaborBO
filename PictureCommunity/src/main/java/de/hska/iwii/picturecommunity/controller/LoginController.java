@@ -62,7 +62,7 @@ public class LoginController implements Serializable{
 	
 
 	
-	public String newUser(){
+	public String newUser() throws IOException{
 		User user = new User(email, password, name, User.ROLE_USER); 
 		String passwd = user.getPassword(); // Passwort des Users
 		userDAO.createUser(user);
@@ -98,7 +98,7 @@ public class LoginController implements Serializable{
 			pushContext.push(CHANNEL, user.getName() + " joined the channel.");
 		//	requestContext.execute("subscriber.connect('/" + username + "')"); privater channel
 
-			return "/pages/private/pictures.xhtml";
+			ec.redirect("/PictureCommunity/pages/private/pictures.xhtml");
 		}
 		return null;
 	}

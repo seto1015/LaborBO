@@ -59,11 +59,11 @@ public class PictureController implements Serializable{
 		if (rq.getMethod().equals("GET")) {
 			selectedUser = loginController.getCurrentUser();
 
-			List<Picture> pictures = pictureDAO.getPictures(selectedUser, 0, 10, false);
-			for (Picture picture : pictures) {
-				picture.setData(ImageUtils.scale(picture.getData(), 500, 313));
-			}
-			this.images = pictures;
+//			List<Picture> pictures = pictureDAO.getPictures(selectedUser, 0, 10, false);
+//			for (Picture picture : pictures) {
+//				picture.setData(ImageUtils.scale(picture.getData(), 500, 313));
+//			}
+			this.images = fetchPictures(selectedUser, 0, 10, false, 500, 313);
 			users = userDAO.findUsersByName("*", null);
 		}
 		return null;
@@ -121,22 +121,29 @@ public class PictureController implements Serializable{
 	}
     
     
+	private List<Picture> fetchPictures(User user, int firstResult, int maxResults, boolean onlyPublicVisable, int newImageWidth, int newImageHeight) throws IOException{
+		List<Picture> pictures = pictureDAO.getPictures(user, firstResult, maxResults, onlyPublicVisable);
+		for (Picture picture : pictures) {
+			picture.setData(ImageUtils.scale(picture.getData(), newImageWidth, newImageHeight));
+		}
+		return pictures;
+	}
+	
    public String updateGalleria() throws IOException{
-	   	System.out.println("Gallerie update!!!");
-	  
 	   	User loggedInUser = loginController.getCurrentUser();
 	   	Set<User> friends = loggedInUser.getFriendsOf();
 	 	boolean onlyPublicVisable = true;
 	   	
-	 	if(selectedUser.equals(loggedInUser) || friends.contains(selectedUser)){
-	   		onlyPublicVisable = false;
-	   	}
-	   	
-	   	List<Picture> pictures = pictureDAO.getPictures(selectedUser, 0, 10, onlyPublicVisable);
-    	for (Picture picture : pictures) {
-    		picture.setData(ImageUtils.scale(picture.getData(), 500, 313)); 		
-		}
-    	this.images = pictures;
+	 	if(selectedUser != null){
+		 	if(selectedUser.equals(loggedInUser) || friends.contains(selectedUser)){
+		   		onlyPublicVisable = false;
+		   	}
+	 	}
+//	   	List<Picture> pictures = pictureDAO.getPictures(selectedUser, 0, 10, onlyPublicVisable);
+//    	for (Picture picture : pictures) {
+//    		picture.setData(ImageUtils.scale(picture.getData(), 500, 313)); 		
+//		}
+	 	this.images = fetchPictures(selectedUser, 0, 10, onlyPublicVisable, 500, 313);
 	   
 	   return null;   
    }
