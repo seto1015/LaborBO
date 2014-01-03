@@ -9,9 +9,18 @@
 	<ui:include src="/pages/include/head.xhtml"></ui:include>
 	<h:outputStylesheet library="css" name="default.css"/>
 	
+	<style type="text/css">
+	  .usersList {
+                height:200px;
+                overflow:auto;
+            }
+	</style>
+	
 	<f:metadata>
 		<f:event listener="#{pictureController.fetchData}" type="preRenderView"/>
 	</f:metadata>
+	
+
 	
 	<h:body>
 		<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
@@ -24,7 +33,7 @@
 		</p:galleria>  
 
 
-   <h:outputText value="Benutzer " />  
+   	<h:outputText value="Benutzer " />  
         <p:selectOneMenu value="#{pictureController.selectedUser}" effect="fade" converter="#{userConverter}" panelStyle="width:150px" style="width:160px"  filter="true" filterMatchMode="startsWith">  
             <f:selectItem itemLabel="Select One" itemValue="" />  
             <f:selectItems value="#{pictureController.users}" var="user" itemLabel="#{user.name}" itemValue="#{user}"/>  
@@ -33,7 +42,7 @@
  		<p:commandButton value="Bilder anzeigen" actionListener="#{pictureController.updateGalleria}" ajax="false" /> 
  		<p:commandButton value="Als freund hinzufügen" action="#{pictureController.addFriend}" ajax="false" />
  		<p:commandButton action="#{pictureController.homeGalleria}" icon="ui-icon-home" ajax="false" />  
-</h:form>
+	</h:form>
 
 
 		<h:form enctype="multipart/form-data">  
@@ -57,7 +66,19 @@
 		  	</p:panelGrid>
 		</h:form>
 		
-
-		  
-	</h:body>
+		<h:form id="form">
+		<p:dataList id="friends" var="user" value="#{loginController.friends}" styleClass="usersList">  
+                    <f:facet name="header">  
+                        Freunde
+                    </f:facet>  
+  					<p:graphicImage value="#{loginController.isUserOnline(user) ? '/resources/images/status-online.png' : '/resources/images/status-offline.png'}" />
+                    #{user}  
+                </p:dataList>  
+		</h:form>
+	
+	
+	<p:socket channel="/chat">
+		<p:ajax update="form:friends" />
+	</p:socket>
+</h:body>
 </html>
