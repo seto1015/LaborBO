@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -42,7 +41,9 @@ public class PictureController implements Serializable{
 	
 	private List<Picture> images; 
 	
-    private UploadedFile file;  
+    private UploadedFile file; 
+    
+    private String description;
     
     private boolean publicVisable;
     
@@ -58,11 +59,6 @@ public class PictureController implements Serializable{
 
 		if (rq.getMethod().equals("GET")) {
 			selectedUser = loginController.getCurrentUser();
-
-//			List<Picture> pictures = pictureDAO.getPictures(selectedUser, 0, 10, false);
-//			for (Picture picture : pictures) {
-//				picture.setData(ImageUtils.scale(picture.getData(), 500, 313));
-//			}
 			this.images = fetchPictures(selectedUser, 0, 10, false, 500, 313);
 			users = userDAO.findUsersByName("*", null);
 		}
@@ -94,15 +90,16 @@ public class PictureController implements Serializable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			picture.setData(bytes);
 			picture.setCreator(user); 	
-			picture.setDescription("Bildgröße: " + file.getSize());
+			picture.setDescription(description);
 			picture.setMimeType(file.getContentType());
 			picture.setName(file.getFileName());
 			picture.setPublicVisible(isPublicVisable());
-			
+		
 			pictureDAO.createPicture(user, picture);
+			description = "";
 			updateGalleria();
 		}
     }  
@@ -139,10 +136,6 @@ public class PictureController implements Serializable{
 		   		onlyPublicVisable = false;
 		   	}
 	 	}
-//	   	List<Picture> pictures = pictureDAO.getPictures(selectedUser, 0, 10, onlyPublicVisable);
-//    	for (Picture picture : pictures) {
-//    		picture.setData(ImageUtils.scale(picture.getData(), 500, 313)); 		
-//		}
 	 	this.images = fetchPictures(selectedUser, 0, 10, onlyPublicVisable, 500, 313);
 	   
 	   return null;   
@@ -186,6 +179,14 @@ public class PictureController implements Serializable{
         this.file = file;  
     } 
 	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public boolean isPublicVisable() {
 		return publicVisable;
 	}

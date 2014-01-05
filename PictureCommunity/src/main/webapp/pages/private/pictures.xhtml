@@ -27,7 +27,7 @@
 <h:form id="galleria">	
 		<h3>#{empty pictureController.selectedUser.name ? 'Öffentliche' : pictureController.selectedUser.name}#{empty pictureController.selectedUser.name ? ' Bildergalerie' : '\'s Bildergalerie'}</h3> 
 		<p:galleria value="#{pictureController.images}" var="img" panelWidth="500" panelHeight="313" effect="clip" showCaption="true">  
-	    	<p:graphicImage value="#{pictureController.image}" alt="#{img.owner.name} &nbsp; &nbsp; &nbsp; #{img.publicVisible ? 'öffentlich' : 'privat'}" title="#{img.name}">
+	    	<p:graphicImage value="#{pictureController.image}" alt="#{img.owner.name} &nbsp; &nbsp; &nbsp; #{img.publicVisible ? 'öffentlich' : 'privat'} &nbsp; &nbsp; &nbsp; - #{img.description}" title="#{img.name}">
 	    	 	<f:param name="id" value="#{img.id}" />
 			</p:graphicImage> 
 		</p:galleria>  
@@ -55,13 +55,21 @@
     			</f:facet> 
 				<p:row>  
 	           		<p:column><p:fileUpload value="#{pictureController.file}" mode="simple"/></p:column>
-	           		<p:column rowspan="2">
+	           		<p:column rowspan="3">
 		           		<h:outputText value="Öffentlich: " />
 		           		<p:selectBooleanCheckbox value="#{pictureController.publicVisable}" />
 	           		</p:column>  
+		        </p:row>
+		        <p:row>
+		        	<p:column>
+		        	 	<h:outputLabel for="description" value="Beschreibung: "/>
+		          		<p:inputText id="description" value="#{pictureController.description}"/>	
+		        	</p:column>
 		        </p:row>  			
 			  	<p:row>  
-		 			<p:column><p:commandButton value="Hochladen" ajax="false" actionListener="#{pictureController.upload}"/></p:column>  
+		 			<p:column>
+		 				<p:commandButton value="Hochladen" ajax="false" actionListener="#{pictureController.upload}"/>
+		 			</p:column>  
 		        </p:row>
 		  	</p:panelGrid>
 		</h:form>
