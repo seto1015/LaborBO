@@ -43,15 +43,6 @@ public class StatisticsController implements Serializable {
 			values.put(user.getName(), pictureDAO.getPictureCount(user));
 		}
 		Map<String, Long> sortedValues = DataUtils.sortByComparator(values);
-
-		System.out.println("Unsort Map......");
-		printMap(values);
-
-		System.out.println("Sorted Map......");
-		printMap(sortedValues);
-
-		System.out.println("User Amount for diagramm: " + userAmount);
-		
 		ChartSeries cs = new ChartSeries();
 		Iterator<Entry<String, Long>> iter = sortedValues.entrySet().iterator();
 		for (int i = 0; iter.hasNext() && i < userAmount; i++) {

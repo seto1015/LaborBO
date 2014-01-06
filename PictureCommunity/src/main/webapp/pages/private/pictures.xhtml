@@ -24,7 +24,8 @@
 	
 	<h:body>
 		<ui:include src="/pages/include/headPanel.xhtml"></ui:include>
-<h:form id="galleria">	
+<h:form id="galleria">
+		<p:growl id="addUserGrowl" showDetail="true" />  	
 		<h3>#{empty pictureController.selectedUser.name ? 'Öffentliche' : pictureController.selectedUser.name}#{empty pictureController.selectedUser.name ? ' Bildergalerie' : '\'s Bildergalerie'}</h3> 
 		<p:galleria value="#{pictureController.images}" var="img" panelWidth="500" panelHeight="313" effect="clip" showCaption="true">  
 	    	<p:graphicImage value="#{pictureController.image}" alt="#{img.owner.name} &nbsp; &nbsp; &nbsp; #{img.publicVisible ? 'öffentlich' : 'privat'} &nbsp; &nbsp; &nbsp; - #{img.description}" title="#{img.name}">
@@ -46,7 +47,7 @@
 
 
 		<h:form enctype="multipart/form-data">  
-		    <p:messages showDetail="true"/>  
+		  <p:growl id="upload" showDetail="true" />  
 		  	<p:panelGrid style="margin-top:20px">
 		  	    <f:facet name="header">  
         			<p:row>  
