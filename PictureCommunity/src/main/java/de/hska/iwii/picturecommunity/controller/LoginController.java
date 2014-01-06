@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.RequestDispatcher;
@@ -62,45 +63,46 @@ public class LoginController implements Serializable{
 	
 
 	
-	public String newUser() throws IOException{
-		User user = new User(email, password, name, User.ROLE_USER); 
+	public String newUser() throws IOException {
+		User user = new User(email, password, name, User.ROLE_USER);
 		String passwd = user.getPassword(); // Passwort des Users
-		userDAO.createUser(user);
+		if (userDAO.createUser(user)) {
+			// Anmeldung durch Username und Password
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, passwd);
+			// Mit Spring-Security anmelden, dazu muss
+			// der neue Anwender bereits in der Datenbank
+			// vorhanden sein.
 
-		// Anmeldung durch Username und Password
-		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, passwd);
-		// Mit Spring-Security anmelden, dazu muss
-		// der neue Anwender bereits in der Datenbank
-		// vorhanden sein.
+			Authentication authUser = authenticationManager.authenticate(token);
+			// Sicherheitshalber prüfen, ob die Anmeldung geklappt hat
+			// (sollte eigentlich immer der Falls ein).
+			if (authUser.isAuthenticated()) {
+				// Anmeldeinformation im Security-Kontext speichern
+				SecurityContext sc = SecurityContextHolder.getContext();
+				sc.setAuthentication(authUser);
+				// Session anlegen und Security-Kontext darin speichern
+				// (JSF-Spezifisch)
+				FacesContext fc = FacesContext.getCurrentInstance();
+				ExternalContext ec = fc.getExternalContext();
+				((HttpSession) ec.getSession(true)).setAttribute(
+								HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+								SecurityContextHolder.getContext());
 
-		Authentication authUser = authenticationManager.authenticate(token);
-		// Sicherheitshalber prüfen, ob die Anmeldung geklappt hat
-		// (sollte eigentlich immer der Falls ein).
-		if (authUser.isAuthenticated()) {
-			// Anmeldeinformation im Security-Kontext speichern
-			SecurityContext sc = SecurityContextHolder.getContext();
-			sc.setAuthentication(authUser);
-			// Session anlegen und Security-Kontext darin speichern
-			// (JSF-Spezifisch)
-			FacesContext fc = FacesContext.getCurrentInstance();
-			ExternalContext ec = fc.getExternalContext();
-			((HttpSession) ec.getSession(true)).setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-							SecurityContextHolder.getContext());
+				this.loggedIn = true;
+				this.currentUser = user;
+				this.admin = false;
+				setFriends();
 
-			this.loggedIn = true;
-			this.currentUser = user;
-			this.admin = false;
-			setFriends();
-
-			//Push-Service join channel
-			onlineUsers.addUser(user.getName());
-		//	RequestContext requestContext = RequestContext.getCurrentInstance();
-			pushContext.push(CHANNEL, user.getName() + " joined the channel.");
-		//	requestContext.execute("subscriber.connect('/" + username + "')"); privater channel
-
-			ec.redirect("/PictureCommunity/pages/private/pictures.xhtml");
+				// Push-Service join channel
+				onlineUsers.addUser(user.getName());
+				pushContext.push(CHANNEL, user.getName() + " joined the channel.");
+				ec.redirect("/PictureCommunity/pages/private/pictures.xhtml");
+			}
+			return null;
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Fehler", "Ein Benutzer mit der selben Email-Adresse existiert bereits!")); 
+			return null;
 		}
-		return null;
 	}
 
 	public String login() throws ServletException, IOException {
@@ -130,6 +132,9 @@ public class LoginController implements Serializable{
 		//	RequestContext requestContext = RequestContext.getCurrentInstance();
 			pushContext.push(CHANNEL, currentUser.getName() + " joined the channel.");
 		//	requestContext.execute("subscriber.connect('/" + username + "')"); privater channel
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Fehler", "Benutzername oder Passwort falsch!")); 	
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 		}
 		FacesContext.getCurrentInstance().responseComplete();
 
@@ -140,7 +145,9 @@ public class LoginController implements Serializable{
 		if (this.loggedIn) {
 			return logout();
 		}
-		return "/pages/login.xhtml";
+		FacesContext.getCurrentInstance().getExternalContext()
+		.redirect("/PictureCommunity/pages/login.xhtml");
+		return null;
 	}
 
 	
@@ -161,11 +168,15 @@ public class LoginController implements Serializable{
 	}
 	
 	
-	public String homeNavigation() {
+	public String homeNavigation() throws IOException {
 		if (this.loggedIn) {
-			return "/pages/private/pictures.xhtml";
+			FacesContext.getCurrentInstance().getExternalContext()
+			.redirect("/PictureCommunity/pages/private/pictures.xhtml");
+			return null;
 		}
-		return "/index.xhtml";
+		FacesContext.getCurrentInstance().getExternalContext()
+		.redirect("/PictureCommunity/index.xhtml");
+		return null;
 	}
 	
 	
@@ -247,6 +258,7 @@ public class LoginController implements Serializable{
 	}
 
 	public List<String> getFriends() {
+		updateCurrentUser();
 		return friends;
 	}
 
