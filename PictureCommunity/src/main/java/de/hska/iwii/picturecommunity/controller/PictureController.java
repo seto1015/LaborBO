@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import org.primefaces.push.PushContext;
+import org.primefaces.push.PushContextFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +32,10 @@ import de.hska.iwii.picturecommunity.backend.utils.ImageUtils;
 @Component
 @Scope("session")
 public class PictureController implements Serializable{
+	
+	private final PushContext pushContext = PushContextFactory.getDefault().getPushContext();  
+	
+	private final static String CHANNEL = "/chat"; 
 	
 	@Resource(name = "pictureDAO")
 	private PictureDAO pictureDAO;
@@ -100,6 +107,7 @@ public class PictureController implements Serializable{
 		
 			pictureDAO.createPicture(user, picture);
 			description = "";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erfolgreich", "Bild " + file.getFileName() + " wurde hochgeladen!"));
 			updateGalleria();
 		}
     }  
@@ -144,27 +152,44 @@ public class PictureController implements Serializable{
    
    public String addFriend(){
 	
-	 User loggedInUser = loginController.getCurrentUser();
-	  
-	 Set<User> friends = loggedInUser.getFriendsOf();
+//	 User loggedInUser = loginController.getCurrentUser();
+//	  
+//	 Set<User> friends = loggedInUser.getFriendsOf();
+//	
+//	 if(friends.contains(selectedUser)){
+//		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Info", selectedUser.getName() + " ist bereits mit dir befreundet!"));
+//	 }else{
+//		 loggedInUser.getFriendsOf().add(selectedUser);
+//		 userDAO.updateUser(loggedInUser);
+//		 loginController.updateCurrentUser();
+//		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erfolgreich", selectedUser.getName() + " kann nun auch deine privaten Bilder sehen!"));
+//	 }
+	 FacesContext fc = FacesContext.getCurrentInstance();
+	 User loggedInUser = loginController.getCurrentUser(); 
 	 
-	 if(friends.contains(selectedUser)){
-		 System.out.println(loggedInUser.getName() + " ist bereits mit " + selectedUser.getName() + " befreundet!!");
-	 }else{
-		 loggedInUser.getFriendsOf().add(selectedUser);
-		 userDAO.updateUser(loggedInUser);
-		 loginController.updateCurrentUser();
+	 if(loggedInUser.equals(selectedUser)){
+		fc.addMessage(null, new FacesMessage("Info", "Du kannst nicht mit dir selbst befreundet sein!"));
 	 }
-	   return null;
+		  
+	 Set<User> friends = selectedUser.getFriendsOf();
+	
+	 if(friends.contains(loggedInUser)){
+		 fc.addMessage(null, new FacesMessage("Info", selectedUser.getName() + " ist bereits mit dir befreundet!"));
+	 }else{
+		 selectedUser.getFriendsOf().add(loggedInUser);
+		 userDAO.updateUser(selectedUser);
+		 fc.addMessage(null, new FacesMessage("Erfolgreich", selectedUser.getName() + " kann nun auch deine privaten Bilder sehen!"));
+		 pushContext.push(CHANNEL, selectedUser.getName() + " is now friends with " + loggedInUser.getName());
+	 }
 	   
+	   return null;   
    }
    
 	public String homeGalleria() throws IOException {
-
 		selectedUser = loginController.getCurrentUser();
 		updateGalleria();
-		return null;
 
+		return null;
 	}
     
 	public List<Picture> getImages() {

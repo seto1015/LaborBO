@@ -200,14 +200,15 @@ public class UserDAO extends AbstractDAO {
 		else {
 			// Alte Beziehungen loeschen
 			params = new MapSqlParameterSource();
-			stmtUpdate = "DELETE FROM member_member WHERE member_id = " + user.getId();
+		//	stmtUpdate = "DELETE FROM member_member WHERE member_id = " + user.getId(); falsch
+			stmtUpdate = "DELETE FROM member_member WHERE friendsOf_id = " + user.getId();
 			getNamedParameterJdbcTemplate().update(stmtUpdate, params);
 			// Beziehungen mit Werten neu anlegen
 			for (Iterator<User> iter = user.getFriendsOf().iterator(); iter.hasNext(); ) {
 				User friend = iter.next();
 				// Man kann nicht sein eigener Freund sein.
 				if (!friend.equals(user)) {
-					stmtUpdate = "INSERT INTO member_member VALUES (" + user.getId() + ", " + friend.getId() + ")";
+					stmtUpdate = "INSERT INTO member_member VALUES (" + friend.getId() + ", " + user.getId() + ")";
 					getNamedParameterJdbcTemplate().update(stmtUpdate, params);
 				}
 				else {
