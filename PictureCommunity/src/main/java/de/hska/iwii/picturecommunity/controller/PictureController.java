@@ -169,6 +169,8 @@ public class PictureController implements Serializable{
 	 
 	 if(loggedInUser.equals(selectedUser)){
 		fc.addMessage(null, new FacesMessage("Info", "Du kannst nicht mit dir selbst befreundet sein!"));
+		
+		return null;
 	 }
 		  
 	 Set<User> friends = selectedUser.getFriendsOf();
