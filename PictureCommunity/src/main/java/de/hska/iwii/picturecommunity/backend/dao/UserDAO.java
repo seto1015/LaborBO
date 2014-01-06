@@ -359,7 +359,8 @@ public class UserDAO extends AbstractDAO {
 	public void deleteUser(User user) {
 		// Ich habe keine Freunde mehr.
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		String stmtUpdate = "DELETE FROM member_member WHERE member_id = " + user.getId();
+		
+		String stmtUpdate = "DELETE FROM member_member WHERE member_id = " + user.getId() + " or friendsOf_id = " + user.getId();
 		getNamedParameterJdbcTemplate().update(stmtUpdate, params);
 
 		// Mich selbst loeschen.
